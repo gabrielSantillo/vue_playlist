@@ -1,10 +1,15 @@
 <template>
   <div>
     <section>
-      <article v-for="(song, index) in songs" :key="index">
+      <article v-for="song in songs" :key="song[`song_id`]">
         <p>{{ song[`title`] }}</p>
         <p>{{ song[`artist`] }}</p>
-        <img :src="song[`img_url`]" alt="" @click="ChosenMusic" />
+        <img
+          :src="song[`img_url`]"
+          alt=""
+          @click="ChosenMusic"
+          :song_id="song[`song_id`]"
+        />
       </article>
     </section>
     <div v-if="song_being_listened === false">
@@ -20,15 +25,18 @@
 <script>
 export default {
   methods: {
-    ChosenMusic() {
-        this.song_being_listened = true;
-        if(this.songs[0][`song_id`] === `01`) {
+    ChosenMusic(details) {
+      this.song_being_listened = true;
+      let song_id = details[`target`].getAttribute(`song_id`);
+      
+      for(let i = 0; i < this.songs.length; i++) {
+        if(this.songs[i][`song_id`] === song_id) {
             let chosen_music = document.querySelector(`.chosen_music`);
-            chosen_music[`innerHTML`] = `
-            <h2>Listenning to</h2>
-            <p>${this.songs[0][`title`]}</p>
-            `
+            chosen_music.insertAdjacentHTML(`beforeend`, `
+            <h2>Listening to</h2>
+            <h3>${this.songs[i][`title`]}</h3>`)
         }
+      }
     },
   },
 
