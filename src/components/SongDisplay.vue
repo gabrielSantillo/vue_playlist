@@ -1,6 +1,7 @@
 <template>
   <div>
     <section>
+      
       <article v-for="song in songs" :key="song[`song_id`]">
         <p>{{ song[`title`] }}</p>
         <p>{{ song[`artist`] }}</p>
@@ -24,18 +25,26 @@
 
 <script>
 export default {
+  
   methods: {
+    /* this function is called after the user chose his song */
     ChosenMusic(details) {
+      /* changing the value of the variable to true */
       this.song_being_listened = true;
+      /* getting the attribute of the tag to identify which song was chosen by its id */
       let song_id = details[`target`].getAttribute(`song_id`);
       
+      /* for lop to go into every object of the array */
       for(let i = 0; i < this.songs.length; i++) {
+        /* when going into every object of the array if the song id matches, this means that this is the song that the user chose */
         if(this.songs[i][`song_id`] === song_id) {
+          /* getting the div tag bby its class name */
             let chosen_music = document.querySelector(`.chosen_music`);
+            /* inserting onto the page informatio of the chosen music */
             chosen_music[`innerHTML`] = `
             <h2>Listening to</h2>
             <h3>${this.songs[i][`title`]}</h3>
-            <img src="${this.songs[i][`img_url`]}" class="listen_class_img">
+            <img src="${this.songs[i][`img_url`]}">
             `
         }
       }
@@ -44,7 +53,9 @@ export default {
 
   data() {
     return {
+      /* this is a variable that starts as false so the h2 tag can be displayed in the screen an alert the user to pick a song */
       song_being_listened: false,
+      /* array with 3 objects inside. Each object contain a title, band name, song id and an image that representes the song */
       songs: [
         {
           title: `In the End`,
@@ -85,9 +96,4 @@ img {
   cursor: pointer;
 }
 
-.listen_class_img {
-  width: 250px;
-  height: 250px;
-  cursor: pointer;
-}
 </style>
