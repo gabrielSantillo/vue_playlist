@@ -32,9 +32,11 @@ export default {
       for(let i = 0; i < this.songs.length; i++) {
         if(this.songs[i][`song_id`] === song_id) {
             let chosen_music = document.querySelector(`.chosen_music`);
-            chosen_music.insertAdjacentHTML(`beforeend`, `
+            chosen_music[`innerHTML`] = `
             <h2>Listening to</h2>
-            <h3>${this.songs[i][`title`]}</h3>`)
+            <h3>${this.songs[i][`title`]}</h3>
+            <img src="${this.songs[i][`img_url`]}" class="listen_class_img">
+            `
         }
       }
     },
@@ -78,6 +80,12 @@ section {
 }
 
 img {
+  width: 250px;
+  height: 250px;
+  cursor: pointer;
+}
+
+.listen_class_img {
   width: 250px;
   height: 250px;
   cursor: pointer;
